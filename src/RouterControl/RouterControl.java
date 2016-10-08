@@ -46,9 +46,11 @@ public class RouterControl {
                  System.out.println("ISP account does not exist");
              }
         }else if(args[0].toLowerCase().equals("-r") || args[0].equals("--restart")){
-                if(util.routerExists()){
+                String routerDetails = fh.getRouter();
+                String[] parts = routerDetails.split(" ");
+                if(util.routerExists(parts[0])){
                     System.out.println("Restarting DSL Connection");
-                    switcher.restartDSL();
+                    switcher.restartDSL(parts[0],parts[1],parts[2]);
                     System.out.println("Restarted! Please wait 5 mins");
                 }else{
                     System.out.println("Could not connect to your router. Please reapply your config.");

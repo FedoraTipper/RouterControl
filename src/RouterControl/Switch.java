@@ -104,23 +104,25 @@ public class Switch {
 //                  webClient.setConfirmHandler(okHandler);
          }
          
-    public void restartDSL() throws IOException{ //dslx_modulation
+    public void restartDSL(String ip,String U, String P) throws IOException{ //dslx_modulation
+        String username = en.decrypt(U);
+        String password = en.decrypt(P);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); 
-        page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp");
+        page = webClient.getPage("http://"+ ip +"/Advanced_ADSL_Content.asp");
         JavaScriptEngine engine = new JavaScriptEngine(webClient);
         webClient.setJavaScriptEngine(engine);
 
         textField1 = page.getHtmlElementById("login_username");       
-        textField1.setValueAttribute(RouterUser);	
+        textField1.setValueAttribute(username);	
         textField = page.getElementByName("login_passwd");
-        textField.setValueAttribute(RouterPass); 
+        textField.setValueAttribute(password); 
 
         JSCode = "login()";
         result = page.executeJavaScript(JSCode);
         Object jsResult = result.getJavaScriptResult();
         page = (HtmlPage) result.getNewPage();
-        page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp"); //Redirect, as the program as it has been authed            
+        page = webClient.getPage("http://"+ ip +"/Advanced_ADSL_Content.asp"); //Redirect, as the program as it has been authed            
 
 
         HtmlSelect select = (HtmlSelect) page.getElementByName("dslx_modulation");
@@ -135,6 +137,7 @@ public class Switch {
         JSCode = "logout();";
         result = page.executeJavaScript(JSCode);
         result.getNewPage(); //Fix confirm box
+        username = null; password = null;
     }
 
     public void switchISP(String account) throws IOException{
