@@ -104,59 +104,48 @@ public class Switch {
 //                  webClient.setConfirmHandler(okHandler);
          }
          
-         public void switchISPOne() throws IOException{
-                 startPage();
-                 textField1 = page.getElementByName("dslx_pppoe_username");
-                 textField1.setValueAttribute(ISP1User);
-                 textField = page.getElementByName("dslx_pppoe_passwd");
-                 textField.setValueAttribute(ISP1Pass);
-                 logoutPage();
-         }
-         
-         public void switchISPTwo() throws IOException{
-                 startPage();
-                 textField1 = page.getElementByName("dslx_pppoe_username");
-                 textField1.setValueAttribute(ISP2User);
-                 textField = page.getElementByName("dslx_pppoe_passwd");
-                 textField.setValueAttribute(ISP2Pass);
-                 logoutPage();
-         }
-         
-         public void restartDSL() throws IOException{ //dslx_modulation
-                 System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-                 java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); 
-                 page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp");
-                 JavaScriptEngine engine = new JavaScriptEngine(webClient);
-                 webClient.setJavaScriptEngine(engine);
-                 
-                 textField1 = page.getHtmlElementById("login_username");       
-                 textField1.setValueAttribute(RouterUser);	
-                 textField = page.getElementByName("login_passwd");
-                 textField.setValueAttribute(RouterPass); 
+    public void restartDSL() throws IOException{ //dslx_modulation
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+        java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF); 
+        page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp");
+        JavaScriptEngine engine = new JavaScriptEngine(webClient);
+        webClient.setJavaScriptEngine(engine);
 
-                 JSCode = "login()";
-                 result = page.executeJavaScript(JSCode);
-                 Object jsResult = result.getJavaScriptResult();
-                 page = (HtmlPage) result.getNewPage();
-                 page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp"); //Redirect, as the program as it has been authed            
-             
-             
-                 HtmlSelect select = (HtmlSelect) page.getElementByName("dslx_modulation");
-                 int newOption = 4;
-                 if(select.getSelectedIndex() ==  4){
-                     newOption = 6;
-                 }
-                 select.setSelectedIndex(newOption);
-                 JSCode = "applyRule();";
-                 result = page.executeJavaScript(JSCode);
-                 result.getNewPage();
-                 JSCode = "logout();";
-                 result = page.executeJavaScript(JSCode);
-                 result.getNewPage(); //Fix confirm box
-         }
+        textField1 = page.getHtmlElementById("login_username");       
+        textField1.setValueAttribute(RouterUser);	
+        textField = page.getElementByName("login_passwd");
+        textField.setValueAttribute(RouterPass); 
 
-    void switchISP(String arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JSCode = "login()";
+        result = page.executeJavaScript(JSCode);
+        Object jsResult = result.getJavaScriptResult();
+        page = (HtmlPage) result.getNewPage();
+        page = webClient.getPage("http://192.168.1.1/Advanced_ADSL_Content.asp"); //Redirect, as the program as it has been authed            
+
+
+        HtmlSelect select = (HtmlSelect) page.getElementByName("dslx_modulation");
+        int newOption = 4;
+        if(select.getSelectedIndex() ==  4){
+            newOption = 6;
+        }
+        select.setSelectedIndex(newOption);
+        JSCode = "applyRule();";
+        result = page.executeJavaScript(JSCode);
+        result.getNewPage();
+        JSCode = "logout();";
+        result = page.executeJavaScript(JSCode);
+        result.getNewPage(); //Fix confirm box
+    }
+
+    public void switchISP(String account) throws IOException{
+        String[] parts = account.split(" ");
+        String username = Encryption.decrypt(parts[1]), password Encryption.decrypt(parts[2]);
+        textField1 = page.getElementByName("dslx_pppoe_username");
+        textField1.setValueAttribute(username);
+        textField = page.getElementByName("dslx_pppoe_passwd");
+        textField.setValueAttribute(password);
+        logoutPage();
+        username = null; password = null;
     }
     
 }

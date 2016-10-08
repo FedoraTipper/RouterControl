@@ -87,13 +87,21 @@ public class FileHandler {
         return true;
     }
     
-    public String ISPAccount(String header){
+    public String getAccount(String header){
+        String line = "";
         try{
             Scanner sc = new Scanner(new FileReader(accountsConfig));
-            
+            while(sc.hasNextLine()){
+                line = sc.nextLine();
+                String[] parts = line.split(" ");
+                if(parts[0] == header){
+                    return line;
+                }
+            }
         }catch(IOException E){
             E.printStackTrace();
         }
+        return line;
     }
     
 }

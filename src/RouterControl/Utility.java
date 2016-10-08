@@ -11,18 +11,22 @@ package RouterControl;
  */
 public class Utility {
    
-    public Utility(){
-        
-    }
-    /*
-    *See if the ISP account exists in the config
-    */
-    public boolean exists(String arg) {
-        
-    }
+ 	FileHandler fh = new FileHandler();
 
-    public boolean routerExists() {
-       
-    }
+	public Utility(){
+	    
+	}
+	/*
+	*See if the ISP account exists in the config
+	*/
+	public boolean exists(String arg) {
+	    if(fh.getAccount(arg) == ""){
+	    	
+	    }
+	}
+
+	public boolean routerExists() {
+	   
+	}
        
 }
