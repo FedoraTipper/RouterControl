@@ -22,7 +22,7 @@ import java.util.logging.Level;
  */
 public class Switch {
 
-
+        Encryption en = new Encryption();
          private WebClient webClient = new WebClient(BrowserVersion.CHROME);
          private HtmlPage page;
          private ScriptResult result;
@@ -55,36 +55,36 @@ public class Switch {
                  result.getJavaScriptResult();
          }
          
-         public void test() throws IOException{
-                 System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-                 java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);                  
-                 page = webClient.getPage("http://192.168.1.1/Advanced_DSL_Content.asp");
-                 JavaScriptEngine engine = new JavaScriptEngine(webClient);
-                 webClient.setJavaScriptEngine(engine);
-                 
-                 textField1 = page.getHtmlElementById("login_username");       
-                 textField1.setValueAttribute(RouterUser);	
-                 textField = page.getElementByName("login_passwd");
-                 textField.setValueAttribute(RouterPass); 
-
-                 JSCode = "login()";
-                 result = page.executeJavaScript(JSCode);
-                 Object jsResult = result.getJavaScriptResult();
-                 page = (HtmlPage) result.getNewPage();
-                 page = webClient.getPage("http://192.168.1.1/Advanced_DSL_Content.asp"); //Redirect, as the program as been authed
-                 
-                 JSCode = "logout();";
-                 result = page.executeJavaScript(JSCode);
-//                 page = (HtmlPage) result.getNewPage(); //Fix confirm box
-//                 ConfirmHandler okHandler = new ConfirmHandler(){
-//                          public boolean handleConfirm(Page page, String message) {
-//                                  return true;
-//                          }
-//                 };
-//                  webClient.setConfirmHandler(okHandler);
-//                  page = webClient.getPage("http://192.168.1.1/index.asp");
-                  System.out.println(page.getBaseURL());                  
-         }
+//         public void test() throws IOException{
+//                 System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+//                 java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);                  
+//                 page = webClient.getPage("http://192.168.1.1/Advanced_DSL_Content.asp");
+//                 JavaScriptEngine engine = new JavaScriptEngine(webClient);
+//                 webClient.setJavaScriptEngine(engine);
+//                 
+//                 textField1 = page.getHtmlElementById("login_username");       
+//                 textField1.setValueAttribute(RouterUser);	
+//                 textField = page.getElementByName("login_passwd");
+//                 textField.setValueAttribute(RouterPass); 
+//
+//                 JSCode = "login()";
+//                 result = page.executeJavaScript(JSCode);
+//                 Object jsResult = result.getJavaScriptResult();
+//                 page = (HtmlPage) result.getNewPage();
+//                 page = webClient.getPage("http://192.168.1.1/Advanced_DSL_Content.asp"); //Redirect, as the program as been authed
+//                 
+//                 JSCode = "logout();";
+//                 result = page.executeJavaScript(JSCode);
+////                 page = (HtmlPage) result.getNewPage(); //Fix confirm box
+////                 ConfirmHandler okHandler = new ConfirmHandler(){
+////                          public boolean handleConfirm(Page page, String message) {
+////                                  return true;
+////                          }
+////                 };
+////                  webClient.setConfirmHandler(okHandler);
+////                  page = webClient.getPage("http://192.168.1.1/index.asp");
+//                  System.out.println(page.getBaseURL());                  
+//         }
          
          private void logoutPage(){
                  JSCode = "showMAC();";
@@ -139,7 +139,8 @@ public class Switch {
 
     public void switchISP(String account) throws IOException{
         String[] parts = account.split(" ");
-        String username = Encryption.decrypt(parts[1]), password Encryption.decrypt(parts[2]);
+        String username = en.decrypt(parts[1]);
+        String password = en.decrypt(parts[2]);
         textField1 = page.getElementByName("dslx_pppoe_username");
         textField1.setValueAttribute(username);
         textField = page.getElementByName("dslx_pppoe_passwd");

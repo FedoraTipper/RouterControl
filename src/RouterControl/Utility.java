@@ -5,6 +5,10 @@
  */
 package RouterControl;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  *
  * @author adam
@@ -19,14 +23,16 @@ public class Utility {
 	/*
 	*See if the ISP account exists in the config
 	*/
-	public boolean exists(String arg) {
-	    if(fh.getAccount(arg) == ""){
-	    	
-	    }
+	public String account(String arg) {
+
 	}
 
-	public boolean routerExists() {
-	   
+	public boolean routerExists(String ip) throws UnknownHostException, IOException {
+	   InetAddress inet = InetAddress.getByName(ip);
+	   if(inet.isReachable(250)){
+	   	return true;
+	   }
+	   return false;
 	}
        
 }

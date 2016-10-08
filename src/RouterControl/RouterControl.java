@@ -32,7 +32,7 @@ public class RouterControl {
             }
         }else if(args[0].toLowerCase().equals("-s") || args[0].toLowerCase().equals("--switch")){
              String account = fh.getAccount(args[1]);
-             if(account != ""){
+             if(!account.equals("")){
                   if(util.routerExists()){
                       System.out.println("Switching to " + args[1]);
                       switcher.switchISP(account);

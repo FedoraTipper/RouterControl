@@ -103,5 +103,19 @@ public class FileHandler {
         }
         return line;
     }
+
+    public String getRouter(){
+        String line = "";
+        try{
+            Scanner sc = new Scanner(new FileReader(routerConfig));
+            if(sc.hasNextLine()){
+                line = sc.nextLine                               
+                return line;
+            }
+        }catch(IOException E){
+            E.printStackTrace();
+        }
+        return line;
+    }
     
 }
