@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="ISPSwitch" default="default" basedir=".">
-    <description>Builds, tests, and runs the project ISPSwitch.</description>
+<project name="RouterControl" default="default" basedir=".">
+    <description>Builds, tests, and runs the project RouterControl</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
@@ -71,7 +71,7 @@
 
     -->
     <target name="package-for-store" depends="jar">
-    <property name="store.jar.name" value="ISPSwitch"/>
+    <property name="store.jar.name" value="RouterControl"/>
     <property name="store.dir" value="complete"/>
     <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
     <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>

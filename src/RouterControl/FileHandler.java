@@ -67,24 +67,58 @@ public class FileHandler {
     	if(!dir.exists()){dir.mkdir();}
     }
 
-    private void writeISP(String header, String username, String password){
+    private boolean writeISP(String header, String username, String password){
+        boolean gate = false;
         String encryptedUsername = crypt.encrypt(username);
-        String encryptedPassword = crypt.decrypt(password);
+        String encryptedPassword = crypt.encrypt(password);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(accountsConfig, true));
             writer.write(header + " " + encryptedUsername + " " + encryptedPassword);
             writer.newLine();
             writer.close();
+            gate = true;
+        } catch (IOException ex) {
+            Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return gate;        
+    }
+
+    private boolean writeRouter(String ip, String username, String password){
+        boolean gate = false;
+        String encryptedUsername = crypt.encrypt(username);
+        String encryptedPassword = crypt.encrypt(password);
+        try {
+            if(routerConfig.exists()){
+                routerConfig.delete();
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(routerConfig, true));
+            writer.write(ip + " " + encryptedUsername + " " + encryptedPassword);           
+            writer.close();
+            gate = true;
         } catch (IOException ex) {
             Logger.getLogger(FileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }        
+        return gate;
     }
     
+    public boolean addRouter(String ip, String username, String password){
+         directoryCreate();
+         configCreate();
+         if(writeRouter(ip, username,password)){
+            return true;
+         }else{
+            return false;
+         }
+    }
+
     public boolean addISP(String header, String username, String password){
         directoryCreate();
         configCreate();
-        writeISP(header, username, password);
-        return true;
+        if(writeISP(header, username, password)){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public String getAccount(String header){
@@ -94,9 +128,10 @@ public class FileHandler {
             while(sc.hasNextLine()){
                 line = sc.nextLine();
                 String[] parts = line.split(" ");
-                if(parts[0] == header){
+                if(parts[0].equals(header)){
                     return line;
                 }
+                line = "";
             }
         }catch(IOException E){
             E.printStackTrace();
@@ -109,7 +144,7 @@ public class FileHandler {
         try{
             Scanner sc = new Scanner(new FileReader(routerConfig));
             if(sc.hasNextLine()){
-                line = sc.nextLine                               
+                line = sc.nextLine();                         
                 return line;
             }
         }catch(IOException E){

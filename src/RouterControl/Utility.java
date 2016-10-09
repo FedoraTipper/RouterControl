@@ -23,8 +23,13 @@ public class Utility {
 	/*
 	*See if the ISP account exists in the config
 	*/
-	public String account(String arg) {
-
+	public boolean exists(String header) {
+		String account = fh.getAccount(header);
+		if(account.equals("")){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	public boolean routerExists(String ip) throws UnknownHostException, IOException {

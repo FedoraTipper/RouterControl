@@ -22,7 +22,7 @@ public class RouterControl {
         Switch switcher = new Switch();
         Utility util = new Utility();
         FileHandler fh = new FileHandler();
-        if(args[0].toLowerCase().equals("--add") || args[0].toLowerCase().equals("--a")){
+        if(args[0].toLowerCase().equals("--add") || args[0].toLowerCase().equals("-a")){
             if(util.exists(args[1])){
                 System.out.println("Account has already been added");
             }else{
@@ -30,12 +30,18 @@ public class RouterControl {
                     System.out.println(args[1] + " has been added to the config");
                 }
             }
+        }else if(args[0].toLowerCase().equals("--config")){
+              if(fh.addRouter(args[1], args[2], args[3])){
+              System.out.println("Router config made");
+           }
         }else if(args[0].toLowerCase().equals("-s") || args[0].toLowerCase().equals("--switch")){
              String account = fh.getAccount(args[1]);
              if(!account.equals("")){
-                  if(util.routerExists()){
+                 String routerDetails = fh.getRouter();
+                 String[] parts = routerDetails.split(" ");
+                  if(util.routerExists(parts[0])){
                       System.out.println("Switching to " + args[1]);
-                      switcher.switchISP(account);
+                      switcher.switchISP(parts[0],parts[1],parts[2],account);
                       System.out.println("Operation complete! Please wait up to 3 mins");
                       account = "";
                   }else{
@@ -65,12 +71,12 @@ public class RouterControl {
     
     private static void printHelp(){
             System.out.println("Usage");
-            System.out.println("ISPSwitch --config [ip of router] [username of router] [password of router]");
-            System.out.println("E.g. ISPSwitch --config 192.168.1.1 admin password123");
-            System.out.println("ISPSwitch [--add] [Header name] [username of ISP account] [password of ISP account]");
-            System.out.println("E.g. ISPSwitch --add AH1 example@afrihost.co.za password123\n");
-            System.out.println("ISPSwitch [-s or --switch] [ISP linked header]");
-            System.out.println("E.g. ISPSwitch -s [vox or 1]\n");
-            System.out.println("ISPSwitch [-r or --restart]\n");          
+            System.out.println("RouterControl [--config] [ip of router] [username of router] [password of router]");
+            System.out.println("E.g. RouterControl --config 192.168.1.1 admin password123");
+            System.out.println("RouterControl [--add] [Header name] [username of ISP account] [password of ISP account]");
+            System.out.println("E.g. RouterControl --add AH1 example@afrihost.co.za password123\n");
+            System.out.println("RouterControl [-s or --switch] [ISP linked header]");
+            System.out.println("E.g. RouterControl -s [vox or 1]\n");
+            System.out.println("RouterControl [-r or --restart]\n");          
     }
 }
