@@ -1,12 +1,12 @@
 <h1>RouterControl</h1>
-
+<b>Asus WRT support only at the moment. More to come</b>
 <h3>How to install:</h3>
-git clone https://github.com/FedoraTipper/RouterControl.git
-cd RouterControl
-mv /complete/RouterControl.jar “Directory of your choosing”/
-nano/gedit/vim/vi (Who cares) RouterControl
-Edit the directory variable to the directory of the jar. Include .jar
-mv RouterControl /bin/
+* git clone https://github.com/FedoraTipper/RouterControl.git
+* cd RouterControl
+* mv /complete/RouterControl.jar “Directory of your choosing”/
+* nano/gedit/vim/vi (Who cares) RouterControl
+* Edit the directory variable to the directory of the jar. Include .jar
+* mv RouterControl /bin/
 
 <h3>How-to use:</h3>
 Depending on your installation the default install will make the script global.
@@ -35,3 +35,7 @@ RouterControl --config [ip of router] [username of router] [password of ISP]
 
 E.g. RouterControl --config 192.168.1.1 admin password123
 
+<h4>What's planned:</h4>
+* Frontend GUI
+* More backend support
+* More functionality
