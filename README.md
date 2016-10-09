@@ -21,9 +21,9 @@ E.g. RouterControl -s [vox or 1]
 
 <b>To restart DSL of the router:</b>
 
-<b>RouterControl [-r or --restart]</b>
+RouterControl [-r or --restart]
 
-To add an ISP and details
+<b>To add an ISP and details:</b>
 
 RouterControl [--add] [Header name] [username of ISP account] [password of ISP account]
 
