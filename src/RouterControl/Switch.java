@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*license TODO*/
+
 package RouterControl;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -102,12 +99,6 @@ public class Switch {
                  JSCode = "logout();";
                  result = page.executeJavaScript(JSCode);
                  result.getNewPage(); //Fix confirm box
-//                 ConfirmHandler okHandler = new ConfirmHandler(){
-//                          public boolean handleConfirm(Page page, String message) {
-//                                  return true;
-//                          }
-//                 };
-//                  webClient.setConfirmHandler(okHandler);
          }
          
     public void restartDSL(String ip,String U, String P) throws IOException{ //dslx_modulation

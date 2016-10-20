@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*license TODO*/
+
 package RouterControl;
 
 import java.io.IOException;
@@ -31,9 +28,20 @@ public class RouterControl {
                 }
             }
         }else if(args[0].toLowerCase().equals("--config")){
-              if(fh.addRouter(args[1], args[2], args[3])){
+            if(fh.addRouter(args[1], args[2], args[3])){
               System.out.println("Router config made");
-           }
+            }
+        }else if(args[0].toLowerCase().equals("--delete")){
+            String account = fh.getAccount(args[1]);
+            if(account.equals("")){
+              System.out.println("Account does not exist in your list of ISPs");
+            }else{
+              if(fh.removeISP(account)){
+                System.out.println("Account successfully deleted from the list");
+              }else{
+                System.out.println("Error whilst deleting");
+              }
+            }
         }else if(args[0].toLowerCase().equals("-s") || args[0].toLowerCase().equals("--switch")){
              String account = fh.getAccount(args[1]);
              if(!account.equals("")){
@@ -75,6 +83,8 @@ public class RouterControl {
             System.out.println("E.g. RouterControl --config 192.168.1.1 admin password123");
             System.out.println("RouterControl [--add] [Header name] [username of ISP account] [password of ISP account]");
             System.out.println("E.g. RouterControl --add AH1 example@afrihost.co.za password123\n");
+            System.out.println("RouterControl [--delete] [ISP linked header]");
+            System.out.println("E.g. RouterControl --delete AH1\n");
             System.out.println("RouterControl [-s or --switch] [ISP linked header]");
             System.out.println("E.g. RouterControl -s [vox or 1]\n");
             System.out.println("RouterControl [-r or --restart]\n");          

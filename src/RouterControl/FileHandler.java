@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*license TODO*/
+
 package RouterControl;
 
 import java.io.BufferedWriter;
@@ -23,6 +20,8 @@ public class FileHandler {
     private File dir = new File(dirPath);
     private String routerPath = dir + "/router.conf"; 
     private String accountsPath = dir + "/account.conf";
+    private String tempPath = dir + "/temp.conf";
+    private File tempConfig = new File(tempPath);
     private File routerConfig = new File(routerPath);
     private File accountsConfig = new File(accountsPath);
     private Encryption crypt = new Encryption();
@@ -61,6 +60,14 @@ public class FileHandler {
             }catch(IOException E){
                 E.printStackTrace();
             }
+    }
+
+    private void tempCreate(){
+        try{
+            tempConfig.createNewFile();
+        }catch(IOException E){
+            E.printStackTrace();
+        }
     }
 
     private void directoryCreate(){
@@ -109,6 +116,32 @@ public class FileHandler {
          }else{
             return false;
          }
+    }
+
+    public boolean removeISP(String accountLine){
+        tempCreate();
+        boolean gate = false;
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tempConfig));
+            Scanner sc = new Scanner(new FileReader(accountsConfig));
+            String line = "";
+            while(sc.hasNextLine()){
+                line = sc.nextLine();
+                if(!line.equals(accountLine)){
+                    bw.write(line);
+                    bw.newLine();
+                }else{
+                    gate = true;
+                }   
+            }
+            accountsConfig.delete();
+            tempConfig.renameTo(accountsConfig);
+            bw.close();
+            sc.close();            
+        }catch(IOException E){
+             E.printStackTrace();
+        }
+        return gate;
     }
 
     public boolean addISP(String header, String username, String password){
