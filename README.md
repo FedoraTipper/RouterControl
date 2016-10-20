@@ -36,6 +36,8 @@ RouterControl --config [ip of router] [username of router] [password of ISP]
 E.g. RouterControl --config 192.168.1.1 admin password123
 
 <h4>What's planned:</h4>
+* Windows support very soon
 * Frontend GUI
+* Other router support
 * More backend support
 * More functionality
